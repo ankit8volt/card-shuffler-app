@@ -192,6 +192,17 @@ export default function Home() {
         onClose={() => setShowShuffleModal(false)}
         onConfirm={handleShuffleConfirm}
       />
+
+      {/* Footer text */}
+      <div 
+        className="fixed bottom-4 right-4 text-white text-2xl sm:text-3xl opacity-70"
+        style={{
+          fontFamily: "'Dancing Script', cursive",
+          fontStyle: 'italic'
+        }}
+      >
+        made with ❤️ and 🍺 last night in 90103
+      </div>
     </div>
   );
 }
