@@ -46,7 +46,7 @@ export default function WelcomePage({ onEnter }: WelcomePageProps) {
               boxShadow: '0 8px 16px rgba(255, 200, 50, 0.4)'
             }}
           >
-            Let's go
+            Let&apos;s go
           </button>
         </div>
       </div>
