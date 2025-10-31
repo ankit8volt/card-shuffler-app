@@ -4,8 +4,10 @@ import { useState, useEffect } from 'react';
 import { Card as CardType, generateDeck, shuffleDeck } from '@/lib/cards';
 import Card from '@/components/Card';
 import ShuffleModal from '@/components/ShuffleModal';
+import WelcomePage from '@/components/WelcomePage';
 
 export default function Home() {
+  const [showWelcome, setShowWelcome] = useState(true);
   const [deck, setDeck] = useState<CardType[]>([]);
   const [openedCards, setOpenedCards] = useState<CardType[]>([]);
   const [currentIndex, setCurrentIndex] = useState(-1);
@@ -84,8 +86,26 @@ export default function Home() {
     ? openedCards[currentIndex] 
     : null;
 
+  // Show welcome page if not entered
+  if (showWelcome) {
+    return <WelcomePage onEnter={() => setShowWelcome(false)} />;
+  }
+
   return (
     <div className="min-h-screen flex flex-col" style={{ background: 'transparent' }}>
+      {/* Exit Button */}
+      <div className="absolute top-4 right-4 z-10">
+        <button
+          onClick={() => setShowWelcome(true)}
+          className="px-4 sm:px-6 py-2 sm:py-3 bg-gray-800 text-white rounded-lg text-sm sm:text-base font-semibold hover:bg-gray-700 transition-colors"
+          style={{
+            fontFamily: "'Dancing Script', cursive"
+          }}
+        >
+          Exit
+        </button>
+      </div>
+
       {/* Title Header */}
       <div className="text-center py-6 sm:py-8 px-4">
         <h1 
