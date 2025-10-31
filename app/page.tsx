@@ -107,7 +107,7 @@ export default function Home() {
       <div className="flex-1 flex flex-col lg:flex-row p-4 sm:p-6 lg:p-8 gap-4 sm:gap-6 lg:gap-8">
         {/* Left side - Deck */}
         <div className="flex-1 flex flex-col">
-          <h2 className="text-white text-lg sm:text-xl mb-3 sm:mb-4 font-semibold text-center">Deck</h2>
+          <h2 className="text-white text-2xl sm:text-3xl md:text-4xl mb-4 sm:mb-6 font-semibold text-center">Deck</h2>
           <div className="flex-1 flex items-center justify-center">
             <div className="relative w-full max-w-[229px]" style={{ height: 'clamp(200px, 40vw, 308px)', aspectRatio: '220/308' }}>
               {deck.length > 0 ? (
@@ -140,7 +140,7 @@ export default function Home() {
 
         {/* Right side - Opened Card */}
         <div className="flex-1 flex flex-col">
-          <h2 className="text-white text-lg sm:text-xl mb-3 sm:mb-4 font-semibold text-center">Opened Card</h2>
+          <h2 className="text-white text-2xl sm:text-3xl md:text-4xl mb-4 sm:mb-6 font-semibold text-center">Opened Card</h2>
           <div className="flex-1 flex items-center justify-center">
             <div className="w-full max-w-[220px]" style={{ height: 'clamp(200px, 40vw, 308px)', aspectRatio: '220/308' }}>
               {currentCard ? (
