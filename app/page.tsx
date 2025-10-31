@@ -85,7 +85,25 @@ export default function Home() {
     : null;
 
   return (
-    <div className="min-h-screen bg-black flex flex-col">
+    <div className="min-h-screen flex flex-col" style={{ background: 'transparent' }}>
+      {/* Title Header */}
+      <div className="text-center py-6 sm:py-8 px-4">
+        <h1 
+          className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold"
+          style={{
+            fontFamily: "'Dancing Script', 'Playfair Display', cursive",
+            color: '#fff8e1',
+            textShadow: '2px 2px 8px rgba(255, 200, 50, 0.5), 0 0 20px rgba(255, 215, 0, 0.3)',
+            letterSpacing: '0.05em',
+            lineHeight: 1.2
+          }}
+        >
+          <span style={{ fontFamily: "'Dancing Script', cursive", fontWeight: 400 }}>Late</span>{' '}
+          <span style={{ fontFamily: "'Dancing Script', cursive", fontWeight: 700, fontSize: '1.15em' }}>Diwali</span>{' '}
+          <span style={{ fontFamily: "'Dancing Script', cursive", fontWeight: 400 }}>Party</span>
+        </h1>
+      </div>
+
       <div className="flex-1 flex flex-col lg:flex-row p-4 sm:p-6 lg:p-8 gap-4 sm:gap-6 lg:gap-8">
         {/* Left side - Deck */}
         <div className="flex-1 flex flex-col">

@@ -5,6 +5,75 @@
 @tailwind utilities;
 
 body {
-  @apply bg-black text-white;
+  color: white;
+  background: 
+    /* Base warm dark background */
+    linear-gradient(135deg, #3d1f0e 0%, #5a3825 50%, #4a2c1a 100%),
+    
+    /* Diwali golden lights - bright and festive */
+    radial-gradient(circle 600px at 50% 10%, rgba(255, 215, 0, 0.9) 0%, rgba(255, 200, 50, 0.6) 25%, transparent 60%),
+    radial-gradient(circle 500px at 45% 8%, rgba(255, 230, 100, 0.8) 0%, transparent 55%),
+    radial-gradient(circle 550px at 55% 12%, rgba(255, 220, 80, 0.75) 0%, transparent 58%),
+    
+    /* Left side warm lights */
+    radial-gradient(circle 450px at 18% 28%, rgba(255, 180, 60, 0.85) 0%, rgba(255, 160, 40, 0.5) 30%, transparent 65%),
+    radial-gradient(circle 400px at 12% 48%, rgba(255, 200, 70, 0.8) 0%, transparent 60%),
+    radial-gradient(circle 420px at 22% 68%, rgba(255, 190, 65, 0.75) 0%, transparent 62%),
+    
+    /* Right side golden lights */
+    radial-gradient(circle 480px at 82% 22%, rgba(255, 225, 90, 0.85) 0%, rgba(255, 210, 70, 0.55) 28%, transparent 62%),
+    radial-gradient(circle 430px at 88% 42%, rgba(255, 215, 85, 0.8) 0%, transparent 60%),
+    radial-gradient(circle 440px at 78% 62%, rgba(255, 195, 75, 0.75) 0%, transparent 63%),
+    
+    /* Center area festive glow */
+    radial-gradient(circle 500px at 38% 52%, rgba(255, 185, 70, 0.7) 0%, transparent 65%),
+    radial-gradient(circle 470px at 62% 48%, rgba(255, 205, 80, 0.75) 0%, transparent 63%),
+    
+    /* Bottom dimmer lights */
+    radial-gradient(circle 380px at 28% 82%, rgba(255, 175, 55, 0.6) 0%, transparent 68%),
+    radial-gradient(circle 360px at 72% 86%, rgba(255, 185, 60, 0.55) 0%, transparent 70%),
+    radial-gradient(circle 340px at 48% 90%, rgba(255, 180, 58, 0.5) 0%, transparent 72%),
+    radial-gradient(circle 400px at 86% 73%, rgba(255, 195, 68, 0.65) 0%, transparent 65%),
+    radial-gradient(circle 350px at 14% 85%, rgba(255, 170, 50, 0.55) 0%, transparent 68%);
+    
+  background-size: 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%;
+  background-attachment: fixed;
+  min-height: 100vh;
+  position: relative;
+}
+
+/* Add subtle festive texture overlay */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    repeating-linear-gradient(
+      0deg,
+      rgba(0, 0, 0, 0.015) 0px,
+      transparent 1px,
+      transparent 2px,
+      rgba(0, 0, 0, 0.015) 3px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      rgba(0, 0, 0, 0.015) 0px,
+      transparent 1px,
+      transparent 2px,
+      rgba(0, 0, 0, 0.015) 3px
+    );
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.4;
+}
+
+/* Ensure content is above the background effects */
+#__next,
+#__next > div {
+  position: relative;
+  z-index: 1;
 }
 
