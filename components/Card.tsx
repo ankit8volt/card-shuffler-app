@@ -110,44 +110,43 @@ export default function Card({ card, isBack = false, size = 'medium' }: CardProp
   if (!card || !card.suit || !card.rank) {
     return (
       <div
-        className="bg-gray-200 rounded-lg border-2 border-gray-400 flex items-center justify-center shadow-lg"
-        style={{ width: sizeMap[size].width, height: sizeMap[size].height }}
+        className="bg-gray-200 rounded-lg border-2 border-gray-400 flex items-center justify-center shadow-lg w-full h-full"
       >
-        <span className="text-gray-500">Invalid Card</span>
+        <span className="text-gray-500 text-xs sm:text-sm">Invalid Card</span>
       </div>
     );
   }
 
-  const { width, height, cornerSize, pipSize } = sizeMap[size];
+  const { cornerSize, pipSize } = sizeMap[size];
   const color = getCardColor(card.suit);
   const symbol = getSuitSymbol(card.suit);
   const isFaceCard = card.rank === 'J' || card.rank === 'Q' || card.rank === 'K';
   const isAce = card.rank === 'A';
   const pipLayout = getPipLayout(card.rank);
 
+  // Use aspect ratio and responsive sizing
+  const cardAspectRatio = 220 / 308; // width/height ratio
+
   if (isBack) {
     return (
       <div
-        className="bg-gradient-to-br from-blue-600 to-blue-800 rounded-lg border-2 border-blue-400 flex items-center justify-center shadow-lg"
-        style={{ width, height }}
+        className="bg-gradient-to-br from-blue-600 to-blue-800 rounded-lg border-2 border-blue-400 flex items-center justify-center shadow-lg w-full h-full"
+        style={{ aspectRatio: cardAspectRatio }}
       >
-        <div className="text-white font-bold" style={{ fontSize: `${Math.min(width, height) * 0.15}px` }}>♠</div>
+        <div className="text-white font-bold" style={{ fontSize: 'clamp(2rem, 8vw, 3rem)' }}>♠</div>
       </div>
     );
   }
 
-  const cornerHeight = width * 0.15;
-  const pipAreaHeight = height - (cornerHeight * 2);
-  const pipAreaTop = cornerHeight;
+  // Calculate sizes based on viewport - use CSS calc for responsiveness
+  const baseSize = 220; // base card width for desktop
+  const cornerHeightPercent = 15; // percentage of card width
+  const pipAreaHeightPercent = 100 - (cornerHeightPercent * 2);
 
   return (
     <div
-      className="bg-white rounded-lg border border-gray-400 shadow-lg relative overflow-hidden"
+      className="bg-white rounded-lg border border-gray-400 shadow-lg relative overflow-hidden w-full h-full"
       style={{ 
-        width, 
-        height, 
-        minWidth: width, 
-        minHeight: height,
         borderRadius: '8px'
       }}
     >
@@ -156,14 +155,14 @@ export default function Card({ card, isBack = false, size = 'medium' }: CardProp
         className="absolute font-bold flex flex-col items-start leading-tight"
         style={{ 
           color, 
-          top: '8px',
-          left: '8px',
-          fontSize: `${width * 0.12}px`,
+          top: 'clamp(4px, 1.5vw, 8px)',
+          left: 'clamp(4px, 1.5vw, 8px)',
+          fontSize: 'clamp(0.875rem, 3vw, 1.25rem)',
           lineHeight: 1
         }}
       >
-        <div style={{ fontSize: `${width * 0.14}px` }}>{card.rank}</div>
-        <div style={{ fontSize: `${width * 0.12}px`, marginTop: '2px' }}>{symbol}</div>
+        <div style={{ fontSize: 'clamp(1rem, 3.5vw, 1.5rem)' }}>{card.rank}</div>
+        <div style={{ fontSize: 'clamp(0.875rem, 3vw, 1.25rem)', marginTop: '2px' }}>{symbol}</div>
       </div>
 
       {/* Bottom-right corner (rotated) */}
@@ -171,25 +170,25 @@ export default function Card({ card, isBack = false, size = 'medium' }: CardProp
         className="absolute font-bold flex flex-col items-end leading-tight"
         style={{ 
           color, 
-          bottom: '8px',
-          right: '8px',
-          fontSize: `${width * 0.12}px`,
+          bottom: 'clamp(4px, 1.5vw, 8px)',
+          right: 'clamp(4px, 1.5vw, 8px)',
+          fontSize: 'clamp(0.875rem, 3vw, 1.25rem)',
           lineHeight: 1,
           transform: 'rotate(180deg)'
         }}
       >
-        <div style={{ fontSize: `${width * 0.14}px` }}>{card.rank}</div>
-        <div style={{ fontSize: `${width * 0.12}px`, marginTop: '2px' }}>{symbol}</div>
+        <div style={{ fontSize: 'clamp(1rem, 3.5vw, 1.5rem)' }}>{card.rank}</div>
+        <div style={{ fontSize: 'clamp(0.875rem, 3vw, 1.25rem)', marginTop: '2px' }}>{symbol}</div>
       </div>
 
       {/* Center area for pips */}
       <div 
         className="absolute"
         style={{
-          top: `${pipAreaTop}px`,
+          top: '15%',
           left: '0',
           right: '0',
-          bottom: `${cornerHeight}px`
+          bottom: '15%'
         }}
       >
         {isFaceCard ? (
@@ -200,7 +199,7 @@ export default function Card({ card, isBack = false, size = 'medium' }: CardProp
                 className="font-bold"
                 style={{ 
                   color, 
-                  fontSize: `${width * 0.35}px`,
+                  fontSize: 'clamp(3rem, 12vw, 5rem)',
                   lineHeight: 1
                 }}
               >
@@ -209,8 +208,8 @@ export default function Card({ card, isBack = false, size = 'medium' }: CardProp
               <span 
                 style={{ 
                   color, 
-                  fontSize: `${width * 0.15}px`,
-                  marginTop: '8px'
+                  fontSize: 'clamp(1.25rem, 5vw, 2rem)',
+                  marginTop: 'clamp(4px, 1.5vw, 8px)'
                 }}
               >
                 {symbol}
@@ -223,7 +222,7 @@ export default function Card({ card, isBack = false, size = 'medium' }: CardProp
             <span 
               style={{ 
                 color, 
-                fontSize: `${Math.min(width, height) * 0.25}px`,
+                fontSize: 'clamp(3rem, 15vw, 6rem)',
                 lineHeight: 1
               }}
             >
@@ -232,7 +231,7 @@ export default function Card({ card, isBack = false, size = 'medium' }: CardProp
           </div>
         ) : (
           // Numbered cards with pips - absolute positioning
-          <div className="relative h-full w-full" style={{ padding: `${pipAreaHeight * 0.18}px ${width * 0.15}px` }}>
+          <div className="relative h-full w-full" style={{ padding: '12% 12%' }}>
             {pipLayout.map((pip, index) => {
               // Column positions: 0 = left (30%), 1 = center (50%), 2 = right (70%)
               const colPercent = pip.col === 0 ? 30 : pip.col === 1 ? 50 : 70;
@@ -257,7 +256,7 @@ export default function Card({ card, isBack = false, size = 'medium' }: CardProp
                   className="absolute"
                   style={{
                     color,
-                    fontSize: `${width * 0.14}px`,
+                    fontSize: 'clamp(1.5rem, 5vw, 2.5rem)',
                     left: `${colPercent}%`,
                     top: `${rowPercent}%`,
                     transform: 'translate(-50%, -50%)',

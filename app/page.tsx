@@ -3,11 +3,13 @@
 import { useState, useEffect } from 'react';
 import { Card as CardType, generateDeck, shuffleDeck } from '@/lib/cards';
 import Card from '@/components/Card';
+import ShuffleModal from '@/components/ShuffleModal';
 
 export default function Home() {
   const [deck, setDeck] = useState<CardType[]>([]);
   const [openedCards, setOpenedCards] = useState<CardType[]>([]);
   const [currentIndex, setCurrentIndex] = useState(-1);
+  const [showShuffleModal, setShowShuffleModal] = useState(false);
 
   // Initialize session on mount
   useEffect(() => {
@@ -62,7 +64,11 @@ export default function Home() {
     }
   };
 
-  const handleShuffle = () => {
+  const handleShuffleClick = () => {
+    setShowShuffleModal(true);
+  };
+
+  const handleShuffleConfirm = () => {
     // Combine all cards
     const allCards = [...openedCards, ...deck];
     // Shuffle
@@ -71,6 +77,7 @@ export default function Home() {
     setDeck(shuffledDeck);
     setOpenedCards([]);
     setCurrentIndex(-1);
+    setShowShuffleModal(false);
   };
 
   const currentCard = currentIndex >= 0 && currentIndex < openedCards.length 
@@ -79,22 +86,22 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-black flex flex-col">
-      <div className="flex-1 flex p-8 gap-8">
+      <div className="flex-1 flex flex-col lg:flex-row p-4 sm:p-6 lg:p-8 gap-4 sm:gap-6 lg:gap-8">
         {/* Left side - Deck */}
         <div className="flex-1 flex flex-col">
-          <h2 className="text-white text-xl mb-4 font-semibold text-center">Deck</h2>
+          <h2 className="text-white text-lg sm:text-xl mb-3 sm:mb-4 font-semibold text-center">Deck</h2>
           <div className="flex-1 flex items-center justify-center">
-            <div className="relative" style={{ height: '308px', width: '229px' }}>
+            <div className="relative w-full max-w-[229px]" style={{ height: 'clamp(200px, 40vw, 308px)', aspectRatio: '220/308' }}>
               {deck.length > 0 ? (
                 <>
                   {/* Stack of cards */}
                   {deck.slice(0, 5).map((card, index) => (
                     <div
                       key={card.id}
-                      className="absolute"
+                      className="absolute w-full h-full"
                       style={{
-                        left: `${index * 3}px`,
-                        top: `${index * 3}px`,
+                        left: `${index * 2}px`,
+                        top: `${index * 2}px`,
                       }}
                     >
                       <Card card={card} isBack={true} size="large" />
@@ -103,32 +110,32 @@ export default function Home() {
                 </>
               ) : (
                 <div className="w-full h-full rounded-lg border-2 border-gray-600 border-dashed flex items-center justify-center">
-                  <span className="text-gray-600 text-sm">Empty</span>
+                  <span className="text-gray-600 text-xs sm:text-sm">Empty</span>
                 </div>
               )}
             </div>
           </div>
-          <p className="text-white mt-4 text-sm text-gray-400 text-center">
+          <p className="text-white mt-3 sm:mt-4 text-xs sm:text-sm text-gray-400 text-center">
             {deck.length} cards remaining
           </p>
         </div>
 
         {/* Right side - Opened Card */}
         <div className="flex-1 flex flex-col">
-          <h2 className="text-white text-xl mb-4 font-semibold text-center">Opened Card</h2>
+          <h2 className="text-white text-lg sm:text-xl mb-3 sm:mb-4 font-semibold text-center">Opened Card</h2>
           <div className="flex-1 flex items-center justify-center">
-            <div style={{ height: '308px', width: '220px' }}>
+            <div className="w-full max-w-[220px]" style={{ height: 'clamp(200px, 40vw, 308px)', aspectRatio: '220/308' }}>
               {currentCard ? (
                 <Card card={currentCard} size="large" />
               ) : (
                 <div className="w-full h-full rounded-lg border-2 border-gray-700 border-dashed flex items-center justify-center">
-                  <span className="text-gray-600 text-sm">No card opened</span>
+                  <span className="text-gray-600 text-xs sm:text-sm">No card opened</span>
                 </div>
               )}
             </div>
           </div>
           {openedCards.length > 0 && (
-            <p className="text-white mt-4 text-sm text-gray-400 text-center">
+            <p className="text-white mt-3 sm:mt-4 text-xs sm:text-sm text-gray-400 text-center">
               Card {currentIndex + 1} of {openedCards.length}
             </p>
           )}
@@ -136,30 +143,37 @@ export default function Home() {
       </div>
 
       {/* Bottom - Buttons */}
-      <div className="p-8 border-t border-gray-800">
-        <div className="flex justify-center gap-4">
+      <div className="p-4 sm:p-6 lg:p-8 border-t border-gray-800">
+        <div className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4">
           <button
             onClick={handlePreviousCard}
             disabled={currentIndex <= 0}
-            className="px-8 py-3 bg-gray-800 text-white rounded-lg font-semibold hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+            className="px-6 sm:px-8 py-2.5 sm:py-3 bg-gray-800 text-white rounded-lg text-sm sm:text-base font-semibold hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
           >
             Previous Card
           </button>
           <button
             onClick={handleNextCard}
             disabled={deck.length === 0}
-            className="px-8 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+            className="px-6 sm:px-8 py-2.5 sm:py-3 bg-blue-600 text-white rounded-lg text-sm sm:text-base font-semibold hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
           >
             Next Card
           </button>
           <button
-            onClick={handleShuffle}
-            className="px-8 py-3 bg-red-600 text-white rounded-lg font-semibold hover:bg-red-700 transition-colors"
+            onClick={handleShuffleClick}
+            className="px-6 sm:px-8 py-2.5 sm:py-3 bg-red-600 text-white rounded-lg text-sm sm:text-base font-semibold hover:bg-red-700 transition-colors"
           >
             Shuffle
           </button>
         </div>
       </div>
+
+      {/* Shuffle Modal */}
+      <ShuffleModal
+        isOpen={showShuffleModal}
+        onClose={() => setShowShuffleModal(false)}
+        onConfirm={handleShuffleConfirm}
+      />
     </div>
   );
 }
