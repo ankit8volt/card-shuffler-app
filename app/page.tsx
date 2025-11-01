@@ -71,29 +71,15 @@ export default function Home() {
   };
 
   const handleShuffleConfirm = () => {
-    // Combine all cards (if any cards are missing, generate a fresh deck)
+    // Combine all cards
     const allCards = [...openedCards, ...deck];
-    
-    // Ensure we have exactly 52 cards
-    let cardsToShuffle = allCards;
-    if (allCards.length !== 52) {
-      // If cards are missing, generate a fresh deck instead
-      cardsToShuffle = generateDeck();
-    }
-    
-    // Shuffle the deck
-    const shuffledDeck = shuffleDeck(cardsToShuffle);
-    
-    // Reset state
+    // Shuffle
+    const shuffledDeck = shuffleDeck(allCards);
+    // Reset
     setDeck(shuffledDeck);
     setOpenedCards([]);
     setCurrentIndex(-1);
     setShowShuffleModal(false);
-    
-    // Clear sessionStorage and save the new shuffled deck
-    sessionStorage.setItem('cardShuffler_deck', JSON.stringify(shuffledDeck));
-    sessionStorage.setItem('cardShuffler_opened', JSON.stringify([]));
-    sessionStorage.setItem('cardShuffler_index', '-1');
   };
 
   const currentCard = currentIndex >= 0 && currentIndex < openedCards.length 
