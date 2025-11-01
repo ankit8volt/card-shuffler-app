@@ -28,8 +28,14 @@ export function generateDeck(): Card[] {
 
 export function shuffleDeck(deck: Card[]): Card[] {
   const shuffled = [...deck];
+  // Use Fisher-Yates shuffle algorithm for true randomness
   for (let i = shuffled.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  // Additional shuffle pass for better randomization
+  for (let i = 0; i < shuffled.length; i++) {
+    const j = Math.floor(Math.random() * shuffled.length);
     [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
   }
   return shuffled;
